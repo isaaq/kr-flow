@@ -1,0 +1,19 @@
+.stencil {
+  position: relative;
+  width: 180px;
+  height: 100%;
+  border-right: 1px solid #dfe3e8;
+  flex-shrink: 0;
+}
+
+.x6-widget-stencil {
+  background-color: #fff;
+}
+
+.x6-widget-stencil-title {
+  background-color: #fff;
+}
+
+.x6-widget-stencil-group-title {
+  background-color: #fff !important;
+}
