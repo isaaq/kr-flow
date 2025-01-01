@@ -1,0 +1,33 @@
+.property-panel {
+  width: 280px;
+  height: 100%;
+  border-left: 1px solid #dfe3e8;
+  background-color: #fff;
+  overflow-y: auto;
+}
+
+.property-panel .ant-card {
+  height: 100%;
+}
+
+.property-panel .ant-card-head {
+  padding: 0 16px;
+  min-height: 48px;
+  border-bottom: 1px solid #dfe3e8;
+}
+
+.property-panel .ant-card-head-title {
+  padding: 12px 0;
+}
+
+.property-panel .ant-card-body {
+  padding: 16px;
+}
+
+.property-panel .ant-form-item {
+  margin-bottom: 16px;
+}
+
+.property-panel .ant-input-number {
+  width: 100%;
+}

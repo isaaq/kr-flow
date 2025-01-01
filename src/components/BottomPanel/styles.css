@@ -1,0 +1,22 @@
+.bottom-panel {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.bottom-buttons {
+  background: #fff;
+  padding: 12px;
+  text-align: center;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.bottom-drawer .ant-drawer-body {
+  padding: 24px;
+}
+
+.bottom-drawer .ant-drawer-content-wrapper {
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
+}
