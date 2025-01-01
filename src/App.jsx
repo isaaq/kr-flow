@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Graph, Shape } from '@antv/x6';
 import { Transform } from '@antv/x6-plugin-transform';
 import { Selection } from '@antv/x6-plugin-selection';
@@ -8,11 +8,14 @@ import { Clipboard } from '@antv/x6-plugin-clipboard';
 import { History } from '@antv/x6-plugin-history';
 import { Stencil } from '@antv/x6-plugin-stencil';
 import insertCss from 'insert-css';
+import Toolbar from './components/Toolbar';
+import 'antd/dist/reset.css';
 
 // Add styles
 const styles = `
   .app-container {
     display: flex;
+    flex-direction: column;
     border: 1px solid #dfe3e8;
     height: 100vh;
     width: 100vw;
@@ -21,6 +24,11 @@ const styles = `
     left: 0;
     margin: 0;
     padding: 0;
+  }
+  .content-container {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
   }
   .stencil {
     width: 180px;
@@ -152,6 +160,7 @@ const ports = {
 const App = () => {
   const graphRef = useRef(null);
   const stencilRef = useRef(null);
+  const [graph, setGraph] = useState(null);
 
   useEffect(() => {
     // Insert CSS
@@ -517,6 +526,8 @@ const App = () => {
       return false;
     });
 
+    setGraph(graph);
+
     return () => {
       graph.dispose();
     };
@@ -524,8 +535,11 @@ const App = () => {
 
   return (
     <div className="app-container">
-      <div className="stencil" ref={stencilRef}></div>
-      <div className="graph-container" ref={graphRef}></div>
+      <Toolbar graph={graph} />
+      <div className="content-container">
+        <div className="stencil" ref={stencilRef}></div>
+        <div className="graph-container" ref={graphRef}></div>
+      </div>
     </div>
   );
 };

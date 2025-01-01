@@ -1,0 +1,14 @@
+.toolbar {
+  padding: 8px;
+  border-bottom: 1px solid #dfe3e8;
+  background-color: #fff;
+}
+
+.toolbar .ant-space {
+  display: flex;
+  justify-content: center;
+}
+
+.toolbar .ant-btn {
+  border-radius: 2px;
+}
