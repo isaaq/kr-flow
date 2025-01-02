@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Graph, Shape } from '@antv/x6';
+import { Graph } from '@antv/x6';
 import { Stencil } from '@antv/x6-plugin-stencil';
 import { ports } from './ports';
 import shapesData from './shapesData.json';
@@ -9,66 +9,9 @@ const LeftPanel = ({ graph }) => {
   const stencilRef = useRef(null);
 
   useEffect(() => {
-    if (!stencilRef.current || !graph) return;
+    if (!graph || !stencilRef.current) return;
 
-    const stencil = new Stencil({
-      title: '流程图',
-      target: graph,
-      stencilGraphWidth: 200,
-      stencilGraphHeight: 180,
-      collapsable: true,
-      groups: [
-        {
-          title: '基础流程图',
-          name: 'group1',
-        },
-        {
-          title: '系统设计图',
-          name: 'group2',
-          graphHeight: 250,
-          layoutOptions: {
-            rowHeight: 70,
-          },
-        },
-      ],
-      layoutOptions: {
-        columns: 2,
-        columnWidth: 80,
-        rowHeight: 55,
-      },
-    });
-
-    stencilRef.current.appendChild(stencil.container);
-
-    // 注册自定义事件处理
-    const stencilContainer = stencilRef.current;
-    const graphContainer = graph.container;
-
-    let isDragging = false;
-
-    stencilContainer.addEventListener('mousedown', () => {
-      isDragging = true;
-    });
-
-    graphContainer.addEventListener('mouseup', () => {
-      if (isDragging) {
-        isDragging = false;
-        // 强制结束拖拽
-        stencil.container.dispatchEvent(new MouseEvent('mouseup'));
-        graph.container.dispatchEvent(new MouseEvent('mouseup'));
-      }
-    });
-
-    document.addEventListener('mouseup', () => {
-      if (isDragging) {
-        isDragging = false;
-        // 强制结束拖拽
-        stencil.container.dispatchEvent(new MouseEvent('mouseup'));
-        graph.container.dispatchEvent(new MouseEvent('mouseup'));
-      }
-    });
-
-    // Register custom nodes
+    // 注册自定义节点
     Graph.registerNode(
       'custom-rect',
       {
@@ -179,45 +122,85 @@ const LeftPanel = ({ graph }) => {
       true,
     );
 
-    // Load basic shapes
-    const nodes = shapesData.basicShapes.map(item => {
-      const node = graph.createNode({
-        ...item,
-        attrs: {
-          ...item.attrs,
-          image: item.image ? {
-            'xlink:href': item.image,
-          } : undefined,
+    const stencil = new Stencil({
+      title: '流程图',
+      target: graph,
+      search: false,
+      collapsable: false,
+      stencilGraphWidth: 200,
+      stencilGraphHeight: 280,
+      groups: [
+        {
+          name: 'group1',
+          title: '基础流程图',
+          collapsable: false,
+          graphHeight: 250,
         },
-      });
-      return node;
+        {
+          name: 'group2',
+          title: '系统设计图',
+          collapsable: false,
+          graphHeight: 250,
+        },
+      ],
+      layoutOptions: {
+        columns: 2,
+        columnWidth: 80,
+        rowHeight: 55,
+      },
     });
-    stencil.load(nodes, 'group1');
 
-    // Load image shapes
-    const imageNodes = shapesData.imageShapes.map(item => {
+    stencilRef.current.appendChild(stencil.container);
+
+    // 创建基础图形
+    const nodes = shapesData.basicShapes.map(nodeData => {
       const node = graph.createNode({
-        shape: item.shape,
-        label: item.label,
+        shape: nodeData.shape,
+        width: 66,
+        height: nodeData.shape === 'custom-circle' ? 45 : 36,
         attrs: {
-          image: {
-            'xlink:href': item.image,
+          body: {
+            strokeWidth: 1,
+            stroke: '#5F95FF',
+            fill: '#EFF4FF',
+            ...nodeData.attrs?.body,
+          },
+          text: {
+            text: nodeData.label,
+            fontSize: 12,
+            fill: '#262626',
           },
         },
+        ports: { ...ports },
       });
       return node;
     });
+
+    // 创建图片节点
+    const imageNodes = shapesData.imageShapes.map(nodeData => {
+      const node = graph.createNode({
+        shape: nodeData.shape,
+        label: nodeData.label,
+        attrs: {
+          image: {
+            'xlink:href': nodeData.image,
+          },
+        },
+        ports: { ...ports },
+      });
+      return node;
+    });
+
+    // 加载节点到 stencil
+    stencil.load(nodes, 'group1');
     stencil.load(imageNodes, 'group2');
 
     return () => {
-      stencilContainer.removeEventListener('mousedown', () => {});
-      graphContainer.removeEventListener('mouseup', () => {});
-      document.removeEventListener('mouseup', () => {});
-      stencil.dispose();
+      stencil.destroy();
     };
   }, [graph]);
 
-  return <div className="stencil" ref={stencilRef}></div>;
+  return <div className="left-panel" ref={stencilRef} />;
 };
 
 export default LeftPanel;

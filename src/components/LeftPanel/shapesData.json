@@ -2,11 +2,27 @@
   "basicShapes": [
     {
       "shape": "custom-rect",
-      "label": "开始"
+      "label": "开始",
+      "attrs": {
+        "body": {
+          "rx": 20,
+          "ry": 26
+        }
+      }
     },
     {
       "shape": "custom-rect",
-      "label": "过程"
+      "label": "功能"
+    },
+    {
+      "shape": "custom-rect",
+      "label": "可选过程",
+      "attrs": {
+        "body": {
+          "rx": 6,
+          "ry": 6
+        }
+      }
     },
     {
       "shape": "custom-polygon",
@@ -39,27 +55,27 @@
     },
     {
       "shape": "custom-image",
-      "label": "Api",
+      "label": "Http",
       "image": "https://gw.alipayobjects.com/zos/bmw-prod/dc1ced06-417d-466f-927b-b4a4d3265791.svg"
     },
     {
       "shape": "custom-image",
-      "label": "Api Gateway",
+      "label": "Api",
       "image": "https://gw.alipayobjects.com/zos/bmw-prod/c55d7ae1-8d20-4585-bd8f-ca23653a4489.svg"
     },
     {
       "shape": "custom-image",
-      "label": "Database",
+      "label": "Sql",
       "image": "https://gw.alipayobjects.com/zos/bmw-prod/6eb71764-18ed-4149-b868-53ad1542c405.svg"
     },
     {
       "shape": "custom-image",
-      "label": "Service",
+      "label": "Clound",
       "image": "https://gw.alipayobjects.com/zos/bmw-prod/c36fe7cb-dc24-4854-aeb5-88d8dc36d52e.svg"
     },
     {
       "shape": "custom-image",
-      "label": "Queue",
+      "label": "Mq",
       "image": "https://gw.alipayobjects.com/zos/bmw-prod/2010ac9f-40e7-49d4-8c4a-4fcf2f83033b.svg"
     }
   ]
